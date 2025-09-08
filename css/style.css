@@ -449,3 +449,70 @@ a:hover {
         margin: 10px auto;
     }
 }
+
+
+
+
+
+
+
+/* ================= sobre nosotros ================= */
+/* ================= PÁGINAS ADICIONALES ================= */
+
+.recetas-section, .about-section {
+    padding: 60px 0;
+    background-color: var(--color-soft-white);
+}
+
+.recetas-section h2, .about-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--color-emerald-green);
+}
+
+.recetas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.receta-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.receta-card:hover {
+    transform: translateY(-5px);
+}
+
+.receta-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.receta-card h3 {
+    margin: 15px 0 10px;
+    font-size: 1.3em;
+    color: var(--color-dark-grey);
+}
+
+.receta-card p {
+    padding: 0 20px 20px;
+    color: var(--color-medium-grey);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--color-medium-grey);
+}
+
+.about-content p {
+    margin-bottom: 20px;
+}

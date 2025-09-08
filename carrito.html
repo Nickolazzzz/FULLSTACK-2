@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuertoHogar - Tu Carrito</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ================= ENCABEZADO ================= -->
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo-huertohogar.png" alt="Logo HuertoHogar">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#catalogo">Catálogo</a></li>
+                    <li><a href="recetas.html">Recetas</a></li>
+                    <li><a href="sobrenosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="cart-button">
+                <a href="carrito.html" class="btn btn-primary">Mi Carrito</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= SECCIÓN DEL CARRITO ================= -->
+        <section id="cart" class="cart-section">
+            <div class="container">
+                <h2>Tu Carrito de Compras</h2>
+                <div id="cart-items" class="cart-items-container">
+                    <!-- Los productos del carrito se renderizarán aquí con JavaScript -->
+                </div>
+                <div id="cart-total" class="cart-total">
+                    <!-- El total se renderizará aquí con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= PIE DE PÁGINA ================= -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <p>&copy; 2024 HuertoHogar. Todos los derechos reservados.</p>
+            <div class="social-media">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vinculamos el archivo JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
