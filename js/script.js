@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ================= CARRITO: Lógica con localStorage =================
+    // ================= CARRITO: logica con localStorage =================
 
     const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
     const cartButton = document.querySelector('.cart-button .btn');
@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productItem = event.target.closest('.product-item');
                 const productName = productItem.querySelector('h3').textContent;
                 const priceText = productItem.querySelector('p:first-of-type').textContent;
+                const productImageSrc = productItem.querySelector('img').src;
                 const productId = productItem.dataset.category + '-' + productName.split(' ')[0];
                 
                 // Extraer el precio numérico
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: productId,
                     name: productName,
                     price: price,
+                    imageSrc: productImageSrc,
                     quantity: 1
                 };
 
@@ -98,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
                 <div class="cart-item-info">
-                    <img src="https://placehold.co/80x80/2E8B57/F7F7F7?text=Prod" alt="${product.name}">
+                    <img src="${product.imageSrc}" alt="${product.name}">
                     <div class="cart-item-details">
                         <h4>${product.name}</h4>
                         <p>Precio: $${product.price.toLocaleString('es-CL')}</p>
