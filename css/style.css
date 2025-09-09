@@ -603,3 +603,155 @@ a:hover {
     font-style: italic;
     padding: 20px;
 }
+
+
+
+/* --- Estilos para la página de Contacto --- */
+
+.contact-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.contact-info,
+.contact-form-container {
+    background-color: #f7f7f7;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-info h3,
+.contact-form-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #4CAF50;
+    text-align: center;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+}
+
+.contact-info li {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-form label {
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+#contact-form input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#contact-form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#contact-form button {
+    margin-top: 2rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+/* Estilo para el contorno rojo de validación */
+#contact-form input.invalid-field {
+    border-color: #e74c3c;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* --- Estilos para la sección de Sucursales y Mapa --- */
+.map-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.map-section h2 {
+    margin-bottom: 1rem;
+}
+
+.map-section p {
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#map-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.sucursales-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.sucursal-item {
+    background-color: #f0faf0;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #d4e9d4;
+    text-align: left;
+    width: 250px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sucursal-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sucursal-item h4 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.sucursal-item p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.2rem;
+}

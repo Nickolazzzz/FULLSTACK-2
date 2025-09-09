@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ================= CARRITO: logica con localStorage =================
+    // ================= CARRITO: Lógica con localStorage =================
 
     const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
     const cartButton = document.querySelector('.cart-button .btn');
@@ -37,10 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productName = productItem.querySelector('h3').textContent;
                 const priceText = productItem.querySelector('p:first-of-type').textContent;
                 const productImageSrc = productItem.querySelector('img').src;
-                const productId = productItem.dataset.category + '-' + productName.split(' ')[0];
                 
+                // Crea un ID único para el producto a partir de su categoría y nombre
+                const productId = productItem.dataset.category + '-' + productName;
+
                 // Extraer el precio numérico
-                const price = parseInt(priceText.replace('Precio: $', '').replace(/ CLP\/Kg| CLP por bolsa de 500g| CLP\/Frasco \(500g\)|,/g, ''));
+                const price = parseInt(priceText.replace('Precio: $', '').replace(/ CLP\/Kg| CLP por bolsa de 500g| CLP por kilo| CLP\/Frasco \(500g\)| CLP la docena|,/g, ''));
 
                 const product = {
                     id: productId,
@@ -167,6 +169,77 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert("Registro exitoso.");
+        });
+    }
+
+   
+   
+   
+   
+   
+    // ================= PÁGINA DE CONTACTO =================
+
+    // Validación del formulario de contacto
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            let allFieldsValid = true;
+            const formInputs = contactForm.querySelectorAll('input[required]');
+            
+            formInputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    input.classList.add('invalid-field');
+                    allFieldsValid = false;
+                } else {
+                    input.classList.remove('invalid-field');
+                }
+            });
+
+            if (allFieldsValid) {
+                alert('Mensaje enviado. ¡Nos pondremos en contacto contigo pronto!');
+                contactForm.reset();
+            }
+        });
+    }
+    
+    // Renderización e interactividad de sucursales
+    const sucursalesListContainer = document.getElementById('sucursales-list');
+    const mapIframe = document.querySelector('#map-container iframe');
+    
+    // Datos de sucursales
+    const sucursales = [
+        { ciudad: "Santiago", direccion: "Av. Principal 123, Santiago", lat: -33.424364, lng: -70.618625 },
+        { ciudad: "Viña del Mar", direccion: "Calle Valparaíso 456, Viña del Mar", lat: -33.023246, lng: -71.551982 },
+        { ciudad: "Valparaíso", direccion: "Subida al Cerro Alegre 789, Valparaíso", lat: -33.045876, lng: -71.614828 },
+        { ciudad: "Concepción", direccion: "O'Higgins 321, Concepción", lat: -36.827626, lng: -73.050520 },
+        { ciudad: "Puerto Montt", direccion: "Ruta 5 Sur Km. 1040, Puerto Montt", lat: -41.472945, lng: -72.937901 }
+    ];
+
+    if (sucursalesListContainer) {
+        sucursales.forEach(sucursal => {
+            const sucursalItem = document.createElement('div');
+            sucursalItem.classList.add('sucursal-item');
+            sucursalItem.dataset.lat = sucursal.lat;
+            sucursalItem.dataset.lng = sucursal.lng;
+            sucursalItem.innerHTML = `
+                <h4>${sucursal.ciudad}</h4>
+                <p>${sucursal.direccion}</p>
+            `;
+            sucursalesListContainer.appendChild(sucursalItem);
+        });
+
+        const sucursalItems = document.querySelectorAll('.sucursal-item');
+        sucursalItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const lat = item.dataset.lat;
+                const lng = item.dataset.lng;
+                
+                // Actualizar el mapa
+                const newSrc = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.170668383344!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sHuertoHogar%20${item.querySelector('h4').textContent}!5e0!3m2!1sen!2sus!4v1625078400000!5m2!1sen!2sus`;
+                mapIframe.src = newSrc;
+            });
         });
     }
 
