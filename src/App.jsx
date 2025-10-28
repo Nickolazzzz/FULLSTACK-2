@@ -32,7 +32,7 @@ function App() {
           
           <Route path="/carrito" element={<Carrito />} />
 
-          <Route path="/admin" element={<Admin />} />
+
         
         </Routes>
       </main>

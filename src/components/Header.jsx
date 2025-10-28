@@ -130,15 +130,6 @@ const Header = () => {
   );
 };
 
-<NavLink 
-  to="/admin" 
-  className={({ isActive }) => 
-    isActive 
-      ? "font-semibold text-green-dark border-b-2 border-green-dark" // Clases si está ACTIVO
-      : "text-gray-700 hover:text-green-primary" // Clases si está INACTIVO
-  }
->
-  <User className="w-6 h-6" /> {Leaf}
-</NavLink>
+
 
 export default Header;
