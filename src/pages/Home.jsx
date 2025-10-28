@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Importar <Link>
-import { getProducts } from '../data/db.js'; // IE2.1.2: Importar READ de BD simulada
+import { Link } from 'react-router-dom'; 
+import { getProducts } from '../data/db.js'; 
 import ProductCard from '../components/ProductCard.jsx';
 import { Search, Loader2, Leaf, Truck, Users } from 'lucide-react';
 
-// IE2.1.1: Datos en JS (para la sección "Valores")
+
 const valoresData = [
   {
     icon: <Leaf className="w-12 h-12 text-green-primary" />,
@@ -23,11 +23,11 @@ const valoresData = [
   }
 ];
 
-// IE2.1.1: Datos en JS (para los botones de filtro)
+
 const categories = ['Todas', 'Verduras', 'Hojas', 'Tubérculos', 'Despensa'];
 
 const Home = () => {
-  // SOLUCIÓN 1: Asegurarse de que el estado inicial es un ARRAY VACÍO
+// Asegurarse de que el estado inicial es un ARRAY VACÍO
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,16 +35,15 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('Todas');
 
-  // SOLUCIÓN 2: Asegurarse de que los datos se cargan correctamente
+  //Asegurarse de que los datos se cargan correctamente
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-          // Esta importación y llamada (con { } y await)
-          // se asegura de que 'data' sea el array de la BD
+
         const data = await getProducts(); 
         
-          // Verificación extra para asegurar que 'data' es un array
+
           if (Array.isArray(data)) {
             setProducts(data);
           } else {
@@ -59,17 +58,16 @@ const Home = () => {
       }
     };
     loadData();
-  }, []); // El array vacío asegura que se ejecute solo una vez
+  }, []);
 
-  // Lógica de filtrado
-  // Esta línea (la 46 o 52) ahora es SEGURA porque 'products' siempre es un array
+
   const filteredProducts = products
     .filter(product => {
       // Filtro de Categoría
       return filterCategory === 'Todas' || product.category === filterCategory;
     })
     .filter(product => {
-      // Filtro de Búsqueda (IE2.2.2)
+      // Filtro de Busqueda
       return product.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
@@ -77,16 +75,16 @@ const Home = () => {
     <main className="font-sans">
       
       {/* ===== SECCIÓN HERO ===== */}
-      <section className="relative h-[400px] md:h-[500px] bg-green-dark flex items-center justify-center text-white overflow-hidden shadow-xl">
+      <section className="relative h-[900px] md:h-[800px] bg-green-dark flex items-center justify-center text-white overflow-hidden shadow-xl">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20" 
-          style={{ backgroundImage: `url(https://placehold.co/1500x700/10b981/ffffff?text=Huerta+Orgánica)` }}
+          className="absolute inset-0 bg-cover bg-center opacity-80" 
+          style={{ backgroundImage: `url(images/familia-huerto1.png)` }}
         ></div>
         <div className="relative z-10 text-center p-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-4 font-display drop-shadow-lg">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-9 font-display drop-shadow-lg">
             ¡Descubre la frescura!
           </h1>
-          <p className="text-lg md:text-2xl font-medium drop-shadow-md mb-8">
+          <p className="text-lg md:text-2xl font-medium drop-shadow-bg mb-12">
             Conéctate con la naturaleza y lleva lo mejor del campo a tu mesa.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -129,7 +127,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-12 font-display">Catálogo de Productos</h2>
           
-          {/* Formulario de Búsqueda y Filtros */}
+
           <div className="flex flex-col md:flex-row gap-4 mb-10 justify-center items-center">
             <div className="relative w-full md:w-1/2 lg:w-1/3">
               <input
@@ -159,7 +157,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Grid de Productos */}
+
           {loading && (
             <div className="flex justify-center items-center h-64">
               <Loader2 className="w-12 h-12 text-green-primary animate-spin" />
@@ -173,7 +171,7 @@ const Home = () => {
             </div>
           )}
 
-          {/* ESTE ES EL BLOQUE CORREGIDO */}
+
           {!loading && !error && filteredProducts.length === 0 && (
             <div className="col-span-full text-center py-10">
               <p className="text-xl text-gray-600">No se encontraron productos que coincidan con tu búsqueda.</p>

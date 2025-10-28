@@ -1,8 +1,8 @@
 import React from 'react';
-import { useCart } from '../context/CartContext'; // Importamos el Hook
+import { useCart } from '../context/CartContext';
 
 const ProductCard = ({ product }) => {
-    const { addToCart } = useCart(); // Obtenemos la función del contexto
+    const { addToCart } = useCart();
 
     return (
         <article className="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 border border-gray-100 flex flex-col">

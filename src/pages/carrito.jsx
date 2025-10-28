@@ -1,11 +1,11 @@
 import React from 'react';
-// 1. Importar el hook useCart para acceder a la lógica del carrito
-import { useCart } from '../context/CartContext.jsx'; // (Asegúrate que la ruta sea correcta)
+
+import { useCart } from '../context/CartContext.jsx';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react';
 
 const Carrito = () => {
-  // 2. Obtener todo lo necesario del Contexto
+  // Obtener del Context
   const { 
     cart, 
     incrementQuantity, 
@@ -16,7 +16,7 @@ const Carrito = () => {
     totalPrice 
   } = useCart();
 
-  // --- Caso 1: El carrito está vacío ---
+  // --- Caso 1 carritovacío ---
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center min-h-[60vh] flex flex-col justify-center items-center">
@@ -34,14 +34,14 @@ const Carrito = () => {
     );
   }
 
-  // --- Caso 2: El carrito tiene productos ---
+  // --- Caso2 carrito productos ---
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Mi Carrito ({totalItems} {totalItems === 1 ? 'producto' : 'productos'})</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Columna Izquierda: Lista de Productos */}
+        {/*  Lista de Productos */}
         <div className="lg:col-span-2 space-y-4">
           {cart.map(item => (
             <div key={item.id} className="flex flex-col sm:flex-row items-center bg-white p-4 rounded-lg shadow-md border">
@@ -58,7 +58,7 @@ const Carrito = () => {
               </div>
               
               <div className="flex items-center space-x-3 my-4 sm:my-0 sm:mx-6">
-                {/* Botón de Decrementar */}
+                
                 <button 
                   onClick={() => decrementQuantity(item.id)}
                   className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
@@ -70,7 +70,7 @@ const Carrito = () => {
                 {/* Cantidad */}
                 <span className="text-lg font-bold w-10 text-center">{item.quantity}</span>
                 
-                {/* Botón de Incrementar */}
+                
                 <button 
                   onClick={() => incrementQuantity(item.id)}
                   className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
@@ -81,10 +81,10 @@ const Carrito = () => {
               </div>
               
               <div className="flex items-center">
-                {/* Subtotal por item */}
+               
                 <p className="text-lg font-bold w-24 text-center sm:text-right">${(item.price * item.quantity).toLocaleString('es-CL')}</p>
                 
-                {/* Botón de Eliminar */}
+               
                 <button 
                   onClick={() => removeFromCart(item.id)}
                   className="ml-4 p-2 text-red-500 hover:text-red-700 transition"
@@ -97,7 +97,7 @@ const Carrito = () => {
           ))}
         </div>
 
-        {/* Columna Derecha: Resumen de Compra */}
+        {/* Resumen de Compra */}
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-lg shadow-lg border sticky top-24">
             <h2 className="text-2xl font-bold text-gray-800 border-b pb-3 mb-4">Resumen del Pedido</h2>
@@ -117,16 +117,16 @@ const Carrito = () => {
                 <span className="text-2xl font-bold text-green-700">${totalPrice.toLocaleString('es-CL')}</span>
               </div>
               
-              {/* Botón Simular Pago */}
+              {/* Botón Simular Pago##FALTA COMPLETAR SIMULACION DE PAGO### */}
               <Link 
-                to="/pago-exitoso" // (Simulamos un pago exitoso por ahora)
-                onClick={clearCart} // ¡Vacía el carrito al pagar!
+                to="/pago-exitoso"
+                onClick={clearCart} 
                 className="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-full text-lg text-center block hover:bg-green-700 transition duration-300"
               >
                 Ir a Pagar
               </Link>
 
-              {/* Botón Vaciar Carrito */}
+              {/*Vaciar Carro */}
               <button 
                 onClick={clearCart}
                 className="w-full text-red-500 hover:text-red-700 font-semibold mt-4 text-sm transition"

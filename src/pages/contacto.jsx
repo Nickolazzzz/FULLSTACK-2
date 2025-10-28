@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, CheckCircle, XCircle } from 'lucide-react';
 
 const Contacto = () => {
-  // Estado para manejar los datos del formulario
+  
   const [formData, setFormData] = useState({
     name: '',
     rut: '',
@@ -11,10 +11,10 @@ const Contacto = () => {
     email: '',
   });
 
-  // Estado para la simulación de respuesta del formulario
+ 
   const [response, setResponse] = useState(null); // null, 'success', 'error'
 
-  // Datos fijos de contacto
+
   const contactInfo = [
     { icon: MapPin, label: "Dirección", value: "Av. Principal 123, Santiago, Chile" },
     { icon: Phone, label: "Teléfono", value: "+56 9 1234 5678" },
@@ -71,7 +71,7 @@ const Contacto = () => {
     }
   };
 
-  // Componente de mensaje de respuesta
+¿
   const ResponseMessage = ({ type, message }) => (
     <div className={`p-4 rounded-lg flex items-center mb-6 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
       {type === 'success' ? <CheckCircle className="w-6 h-6 mr-3" /> : <XCircle className="w-6 h-6 mr-3" />}
@@ -81,17 +81,17 @@ const Contacto = () => {
 
   return (
     <main>
-      {/* SECCIÓN DE CONTACTO Y FORMULARIO */}
+
       <section id="contact" className="py-16 md:py-20 bg-gray-50">
         <div className="container px-4 mx-auto">
           <h2 className="text-5xl font-extrabold text-center text-green-700 mb-12 font-['Playfair_Display']">
             Contáctanos
           </h2>
 
-          {/* contact-grid: Diseño de dos columnas */}
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white p-8 md:p-12 rounded-2xl shadow-2xl">
             
-            {/* Columna 1: Información de Contacto */}
+       
             <div className="lg:order-first">
               <h3 className="text-3xl font-bold text-green-800 mb-6">Nuestra Información</h3>
               <p className="text-gray-600 mb-8 leading-relaxed">
@@ -117,17 +117,17 @@ const Contacto = () => {
               </div>
             </div>
 
-            {/* Columna 2: Formulario de Contacto (IE1.2.2) */}
+     
             <div className="contact-form-container bg-gray-50 p-8 rounded-xl shadow-inner">
               <h3 className="text-3xl font-bold text-green-800 mb-6">Envíanos un Mensaje</h3>
               
-              {/* Mostrar mensaje de respuesta */}
+              {/*  mensaje respuesta */}
               {response && <ResponseMessage type={response.type} message={response.message} />}
 
-              {/* Formulario migrado a React con manejo de estado */}
+       
               <form onSubmit={handleSubmit} className="space-y-4">
                 
-                {/* Nombre */}
+     
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Nombre Completo (*)</label>
                   <input
@@ -142,7 +142,7 @@ const Contacto = () => {
                   />
                 </div>
 
-                {/* RUT */}
+     
                 <div>
                   <label htmlFor="rut" className="block text-sm font-medium text-gray-700 mb-1">RUT (*)</label>
                   <input
@@ -157,7 +157,7 @@ const Contacto = () => {
                   />
                 </div>
 
-                {/* Dirección */}
+    
                 <div>
                   <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
                   <input
@@ -171,7 +171,6 @@ const Contacto = () => {
                   />
                 </div>
 
-                {/* Teléfono */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
                   <input
@@ -185,7 +184,7 @@ const Contacto = () => {
                   />
                 </div>
 
-                {/* Email */}
+      
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico (*)</label>
                   <input
@@ -214,7 +213,7 @@ const Contacto = () => {
         </div>
       </section>
 
-      {/* SECCIÓN DE SUCURSALES Y MAPA */}
+ 
       <section id="sucursales" className="py-16 md:py-20 bg-white">
         <div className="container px-4 mx-auto">
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">Nuestras Sucursales</h2>
@@ -222,7 +221,7 @@ const Contacto = () => {
             Encuentra tu sucursal HuertoHogar más cercana. Operamos en las principales ciudades de Chile para llevar la frescura del campo directamente a tu mesa.
           </p>
           
-          {/* Sucursales Grid (IE2.1.1: Usando datos en JS) */}
+          {/* Sucursales */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
             {sucursalesData.map((sucursal, index) => (
               <div key={index} className="bg-green-50 p-4 rounded-lg text-center shadow-md hover:bg-green-100 transition duration-150">
@@ -232,7 +231,7 @@ const Contacto = () => {
             ))}
           </div>
 
-          {/* Mapa de Ubicación */}
+    
           <div id="map-container" className="rounded-xl overflow-hidden shadow-xl border-4 border-green-200">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.170668383344!2d-70.61862528485232!3d-33.42436448078971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5890e1f13f1%3A0x6b5e1b0c0a9e70e!2sSantiago%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1sen!2sus!4v1625078400000!5m2!1sen!2sus"

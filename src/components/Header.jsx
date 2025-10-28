@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-// 1. Importamos los 'hooks' de React Router
+
 import { useNavigate, useLocation } from 'react-router-dom';
-// 2. ¡Importamos el hook 'useCart' del Contexto!
+
 import { useCart } from '../context/CartContext';
 import { ShoppingCart, Menu, X, Leaf, Icon } from 'lucide-react';
 
-// 3. ¡El Header ya no recibe 'cart' como prop!
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // 4. ¡Obtenemos el 'cart' directamente desde el Contexto!
+  //car directamente desde el contexto
   const { cart } = useCart();
 
   const navigate = useNavigate(); 
@@ -27,8 +27,6 @@ const Header = () => {
   };
   const currentPage = getCurrentPage();
 
-  // 5. ¡Esta línea (la 28) ahora funciona!
-  //    'cart' ya no es 'undefined', es el array del Contexto.
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const navLinks = [
@@ -56,7 +54,7 @@ const Header = () => {
     }
   };
 
-  // El resto de tu JSX de Header (no necesita cambios)
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-lg font-['Montserrat']">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
@@ -69,7 +67,8 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Navegación de Escritorio */}
+       
+        {/* navegacion de   escritorio */}
         <nav className="hidden lg:flex main-nav space-x-6">
           {navLinks.map((link) => (
             <button
@@ -83,10 +82,12 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Botón Carrito y Menú Móvil */}
+        
+        
+        {/* area de carrito y Menu movil */}
         <div className="flex items-center space-x-4">
           
-          {/* Carrito (Ahora navega a la página /carrito) */}
+          
           <button
             onClick={() => handleNavClick('carrito', '')}
             className="flex items-center bg-green-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 hover:bg-green-600 shadow-md shadow-green-500/50 relative"
@@ -101,6 +102,8 @@ const Header = () => {
             )}
           </button>
 
+          
+          
           {/* Botón de Hamburguesa para Móvil */}
           <button
             className="lg:hidden text-gray-700 hover:text-green-600"
@@ -112,6 +115,9 @@ const Header = () => {
         </div>
       </div>
 
+      
+      
+      
       {/* Menú Móvil Desplegable */}
       {isMenuOpen && (
         <div className="lg:hidden bg-gray-50 border-t border-gray-200 py-2">

@@ -1,12 +1,12 @@
 import React from 'react';
 
-// Datos estáticos de las recetas (simulando una llamada a la "base de datos" - IE2.1.1)
+
 const recetasData = [
   {
     id: 1,
     title: "Sopa Cremosa de Zanahoria",
     description: "Una sopa reconfortante y nutritiva, perfecta para días fríos. Hecha con zanahorias frescas y un toque de jengibre.",
-    image: "https://placehold.co/400x300/F0F3BD/6C872E?text=Sopa+de+Zanahoria",
+    image: "images/sopadezanahoria.jpg",
     ingredients: [
       "500g de zanahorias frescas",
       "1 cebolla picada",
@@ -24,7 +24,7 @@ const recetasData = [
     id: 2,
     title: "Ensalada de Espinacas y Nueces",
     description: "Una ensalada fresca y vibrante, ideal para una comida ligera. Combina espinacas, nueces, queso de cabra y una vinagreta balsámica.",
-    image: "https://placehold.co/400x300/B2D0AE/6C872E?text=Ensalada+de+Espinaca",
+    image: "images/ensaladadeespinaca.jpg",
     ingredients: [
       "200g de espinacas frescas",
       "50g de nueces picadas",
@@ -41,7 +41,7 @@ const recetasData = [
     id: 3,
     title: "Salteado de Pimientos Tricolores",
     description: "Un plato rápido y lleno de color. Saltea pimientos rojos, amarillos y verdes para una guarnición deliciosa y llena de vitaminas.",
-    image: "https://placehold.co/400x300/C5D8A5/6C872E?text=Salteado+de+Pimientos",
+    image: "images/salteadodepimientos.jpg",
     ingredients: [
       "1 pimiento rojo",
       "1 pimiento amarillo",
@@ -60,26 +60,27 @@ const recetasData = [
 
 const Recetas = () => {
   return (
-    // Sección principal (reemplaza <section id="recetas" class="recetas-section">)
+    
     <section id="recetas" className="py-12 bg-gray-50">
       <div className="container">
-        {/* Título principal */}
+        
+
         <h2 className="text-5xl font-extrabold text-center text-green-700 mb-10 font-['Playfair_Display']">
           Recetas de la huerta
         </h2>
 
-        {/* Reemplaza .recetas-grid con un grid responsivo de Tailwind */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recetasData.map((receta) => (
-            // Reemplaza .receta-card con una tarjeta de Tailwind
+           
             <div key={receta.id} className="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-green-300/50 hover:scale-[1.02]">
               
-              {/* Imagen con fallback */}
+              {/* error de imagen no dispo */}
               <img 
                 src={receta.image} 
                 alt={receta.title} 
                 className="w-full h-48 object-cover" 
-                // Fallback para imágenes que no carguen
+               
                 onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "https://placehold.co/400x300/94A3B8/FFFFFF?text=Imagen+no+disponible";
@@ -90,10 +91,10 @@ const Recetas = () => {
                 <h3 className="text-2xl font-semibold text-green-600 mb-3">{receta.title}</h3>
                 <p className="text-gray-600 mb-4 text-sm">{receta.description}</p>
                 
-                {/* Detalles de la receta */}
+                
                 <div className="space-y-4">
                   
-                  {/* Ingredientes */}
+                  
                   <div className="receta-details">
                     <h4 className="font-bold text-lg text-green-700 mb-2 border-b border-green-100 pb-1">Ingredientes:</h4>
                     <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 pl-4">
@@ -103,7 +104,7 @@ const Recetas = () => {
                     </ul>
                   </div>
 
-                  {/* Preparación */}
+                  
                   <div className="receta-details">
                     <h4 className="font-bold text-lg text-green-700 mb-2 border-b border-green-100 pb-1">Preparación:</h4>
                     <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700 pl-4">
