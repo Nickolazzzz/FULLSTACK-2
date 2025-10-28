@@ -21,7 +21,7 @@ const Contacto = () => {
     { icon: Mail, label: "Email", value: "contacto@huertohogar.cl" },
   ];
 
-  // Datos fijos de sucursales (usados para renderizar dinámicamente)
+  // Datos fijos de sucursales 
   const sucursalesData = [
     { city: "Santiago", address: "Calle Arica 456" },
     { city: "Puerto Montt", address: "Av. Costanera Sur 101" },
@@ -34,24 +34,25 @@ const Contacto = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    setResponse(null); // Borrar la respuesta al empezar a escribir
+    setResponse(null); 
   };
 
-  // Función de validación (simulación)
+ 
   const validateForm = () => {
     const { name, rut, email } = formData;
     if (!name.trim() || !rut.trim() || !email.trim()) {
       return "Todos los campos obligatorios deben ser completados.";
     }
-    // Validación simple de formato de email
+  
     if (!/\S+@\S+\.\S+/.test(email)) {
       return "El correo electrónico no tiene un formato válido.";
     }
-    // Validación básica de RUT (solo longitud simulada)
+    
+
     if (rut.length < 8) {
       return "El RUT debe contener al menos 8 caracteres (sin incluir guion).";
     }
-    return null; // Null si no hay errores
+    return null; 
   };
 
   // Manejador de envío del formulario
@@ -60,7 +61,7 @@ const Contacto = () => {
     const validationError = validateForm();
 
     if (validationError) {
-      // Si hay un error de validación (IE1.2.2)
+      // Si hay un error de validación 
       console.error("Error de validación:", validationError);
       setResponse({ type: 'error', message: validationError });
     } else {
@@ -71,7 +72,7 @@ const Contacto = () => {
     }
   };
 
-¿
+
   const ResponseMessage = ({ type, message }) => (
     <div className={`p-4 rounded-lg flex items-center mb-6 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
       {type === 'success' ? <CheckCircle className="w-6 h-6 mr-3" /> : <XCircle className="w-6 h-6 mr-3" />}

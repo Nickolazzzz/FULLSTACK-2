@@ -6,6 +6,9 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Carrito from './pages/carrito.jsx';  
 
+import Admin from './pages/Admin.jsx';
+
+import PagoExitoso from './pages/pago-exitoso.jsx';
 
 import Home from './pages/Home.jsx';
 import Recetas from './pages/recetas.jsx';
@@ -29,7 +32,10 @@ function App() {
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
           
+          <Route path="/pago-exitoso" element={<PagoExitoso />} />  
+
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/admin" element={<Admin />} />
 
 
         

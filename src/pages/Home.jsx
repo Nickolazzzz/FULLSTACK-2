@@ -75,7 +75,7 @@ const Home = () => {
     <main className="font-sans">
       
       {/* ===== SECCIÓN HERO ===== */}
-      <section className="relative h-[900px] md:h-[800px] bg-green-dark flex items-center justify-center text-white overflow-hidden shadow-xl">
+      <section className="relative h-[900px] md:h-[800px] bg-green-dark flex items-center justify-center text-black overflow-hidden shadow-xl">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-80" 
           style={{ backgroundImage: `url(images/familia-huerto1.png)` }}
@@ -95,7 +95,7 @@ const Home = () => {
               Explorar Catálogo
             </a>
             <Link 
-              to="/nosotros" 
+              to="/contacto" 
               className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-green-dark transition duration-300"
             >
               Únete Ahora

@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // Esto busca en todas tus carpetas de 'src'
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
