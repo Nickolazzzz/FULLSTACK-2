@@ -3,81 +3,102 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // 1. Crear el Contexto
 const CartContext = createContext();
 
-// 2. Crear un Hook personalizado para consumir el contexto fácilmente
+// 2. Crear el Hook personalizado (para consumir el contexto)
 export const useCart = () => {
-    return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context) {
+    // Este error se dispara si intentamos usar el contexto fuera del Provider
+    throw new Error("useCart debe ser usado dentro de un CartProvider");
+  }
+  return context;
 };
 
-// 3. Crear el Proveedor (Provider) que manejará la lógica del estado
+// 3. Crear el Proveedor (Provider)
 export const CartProvider = ({ children }) => {
-    
-    // Función para cargar el carrito desde localStorage al iniciar
-    const loadCart = () => {
-        try {
-            const storedCart = localStorage.getItem('huertohogar_cart');
-            return storedCart ? JSON.parse(storedCart) : [];
-        } catch (error) {
-            console.error("Error cargando el carrito:", error);
-            return [];
-        }
+  // Estado para guardar los items del carrito
+  const [cart, setCart] = useState([]);
+  
+  // Estados para los totales (calculados automáticamente)
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Efecto para recalcular los totales cada vez que el 'cart' cambie
+  useEffect(() => {
+    const calculateTotals = () => {
+      const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const priceTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      setTotalItems(itemsCount);
+      setTotalPrice(priceTotal);
     };
+    calculateTotals();
+  }, [cart]);
 
-    const [cart, setCart] = useState(loadCart);
+  // --- FUNCIONES DEL CARRITO ---
 
-    // Efecto para guardar en localStorage cada vez que el carrito cambie
-    useEffect(() => {
-        try {
-            localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
-        } catch (error) {
-            console.error("No se pudo guardar el carrito:", error);
-        }
-    }, [cart]);
+  // Añadir un producto
+  const addToCart = (product, quantity = 1) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === product.id);
+      
+      if (existingItem) {
+        // Si ya existe, actualiza la cantidad
+        return prevCart.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+        );
+      } else {
+        // Si es nuevo, lo añade al array
+        return [...prevCart, { ...product, quantity }];
+      }
+    });
+  };
 
-    // --- Funciones de Lógica del Carrito ---
-
-    const addToCart = (product) => {
-        setCart(prevCart => {
-            const existingProduct = prevCart.find(item => item.id === product.id);
-            if (existingProduct) {
-                // Si existe, aumenta la cantidad
-                return prevCart.map(item =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-                );
-            } else {
-                // Si es nuevo, lo agrega
-                return [...prevCart, { ...product, quantity: 1 }];
-            }
-        });
-        alert(`"${product.name}" ha sido añadido al carrito.`);
-    };
-
-    const updateQuantity = (id, change) => {
-        setCart(prevCart => {
-            return prevCart
-                .map(item =>
-                    item.id === id ? { ...item, quantity: item.quantity + change } : item
-                )
-                .filter(item => item.quantity > 0); // Elimina si la cantidad llega a 0
-        });
-    };
-
-    const removeItem = (id) => {
-        setCart(prevCart => prevCart.filter(item => item.id !== id));
-    };
-
-    // 4. Valores que se expondrán a los componentes hijos
-    const value = {
-        cart,
-        addToCart,
-        updateQuantity,
-        removeItem,
-        totalItems: cart.reduce((sum, product) => sum + product.quantity, 0),
-        totalPrice: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-    };
-
-    return (
-        <CartContext.Provider value={value}>
-            {children}
-        </CartContext.Provider>
+  // Incrementar cantidad
+  const incrementQuantity = (productId) => {
+    setCart(prevCart => 
+      prevCart.map(item =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
+  };
+
+  // Decrementar cantidad
+  const decrementQuantity = (productId) => {
+    setCart(prevCart => 
+      prevCart.map(item =>
+        item.id === productId 
+          ? { ...item, quantity: Math.max(1, item.quantity - 1) } // No permite bajar de 1
+          : item
+      )
+    );
+  };
+
+  // Eliminar un producto
+  const removeFromCart = (productId) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+  };
+
+  // Vaciar el carrito
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  // 4. Valor que proveerá el Contexto
+  const value = {
+    cart,
+    addToCart,
+    incrementQuantity,
+    decrementQuantity,
+    removeFromCart,
+    clearCart,
+    totalItems,
+    totalPrice
+  };
+
+  return (
+    <CartContext.Provider value={value}>
+      {children}
+    </CartContext.Provider>
+  );
 };
+

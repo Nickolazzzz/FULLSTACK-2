@@ -1,66 +1,200 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../components/ProductCard';
-import { getProducts } from '../data/db'; // Importamos la función de la DB simulada
+import { Link } from 'react-router-dom'; // Importar <Link>
+import { getProducts } from '../data/db.js'; // IE2.1.2: Importar READ de BD simulada
+import ProductCard from '../components/ProductCard.jsx';
+import { Search, Loader2, Leaf, Truck, Users } from 'lucide-react';
+
+// IE2.1.1: Datos en JS (para la sección "Valores")
+const valoresData = [
+  {
+    icon: <Leaf className="w-12 h-12 text-green-primary" />,
+    title: "Sembrado con Pasión",
+    description: "Calidad y frescura desde el origen."
+  },
+  {
+    icon: <Truck className="w-12 h-12 text-green-primary" />,
+    title: "Directo a tu Hogar",
+    description: "Sostenibilidad en cada entrega."
+  },
+  {
+    icon: <Users className="w-12 h-12 text-green-primary" />,
+    title: "Apoyo Local",
+    description: "Soporte a Pymes y agricultores."
+  }
+];
+
+// IE2.1.1: Datos en JS (para los botones de filtro)
+const categories = ['Todas', 'Verduras', 'Hojas', 'Tubérculos', 'Despensa'];
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
-    const [filter, setFilter] = useState('all');
-    const [loading, setLoading] = useState(true);
+  // SOLUCIÓN 1: Asegurarse de que el estado inicial es un ARRAY VACÍO
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('Todas');
 
-    // Cargar productos al montar el componente
-    useEffect(() => {
-        setLoading(true);
-        getProducts()
-            .then(data => {
-                setProducts(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Error al cargar productos:", err);
-                setLoading(false);
-            });
-    }, []); // El array vacío asegura que se ejecute solo una vez
+  // SOLUCIÓN 2: Asegurarse de que los datos se cargan correctamente
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+          // Esta importación y llamada (con { } y await)
+          // se asegura de que 'data' sea el array de la BD
+        const data = await getProducts(); 
+        
+          // Verificación extra para asegurar que 'data' es un array
+          if (Array.isArray(data)) {
+            setProducts(data);
+          } else {
+            console.error("Error: getProducts() no devolvió un array.", data);
+            setError("Los datos de productos no son válidos.");
+          }
+      } catch (err) {
+        setError("No se pudieron cargar los productos.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []); // El array vacío asegura que se ejecute solo una vez
 
-    const filteredProducts = products.filter(p => filter === 'all' || p.category === filter);
+  // Lógica de filtrado
+  // Esta línea (la 46 o 52) ahora es SEGURA porque 'products' siempre es un array
+  const filteredProducts = products
+    .filter(product => {
+      // Filtro de Categoría
+      return filterCategory === 'Todas' || product.category === filterCategory;
+    })
+    .filter(product => {
+      // Filtro de Búsqueda (IE2.2.2)
+      return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
-    return (
-        <>
-            <section className="text-center mb-12 p-8 bg-green-50 rounded-2xl shadow-inner">
-                <h2 className="text-4xl font-extrabold text-green-800 mb-4">La Frescura de HuertoHogar</h2>
-                <p className="text-lg text-gray-600">Directo de la tierra a tu mesa, con la calidad y frescura que nos caracteriza.</p>
-            </section>
+  return (
+    <main className="font-sans">
+      
+      {/* ===== SECCIÓN HERO ===== */}
+      <section className="relative h-[400px] md:h-[500px] bg-green-dark flex items-center justify-center text-white overflow-hidden shadow-xl">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20" 
+          style={{ backgroundImage: `url(https://placehold.co/1500x700/10b981/ffffff?text=Huerta+Orgánica)` }}
+        ></div>
+        <div className="relative z-10 text-center p-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-4 font-display drop-shadow-lg">
+            ¡Descubre la frescura!
+          </h1>
+          <p className="text-lg md:text-2xl font-medium drop-shadow-md mb-8">
+            Conéctate con la naturaleza y lleva lo mejor del campo a tu mesa.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="#catalogo" 
+              className="bg-yellow-primary text-gray-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-amber-400 transition duration-300 shadow-lg transform hover:scale-105"
+            >
+              Explorar Catálogo
+            </a>
+            <Link 
+              to="/nosotros" 
+              className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-white hover:text-green-dark transition duration-300"
+            >
+              Únete Ahora
+            </Link> 
+            </div>
+        </div>
+      </section>
 
-            <section id="catalogo" className="mb-12">
-                <div className="flex flex-col sm:flex-row justify-between items-center mb-6 border-b pb-4">
-                    <h2 className="text-3xl font-bold text-green-700 mb-4 sm:mb-0">Catálogo de Productos</h2>
-                    <div className="flex space-x-2">
-                        {/* Botones de Filtro */}
-                        {['all', 'frutas', 'verduras'].map(category => (
-                            <button 
-                                key={category}
-                                type="button"
-                                className={`px-4 py-2 rounded-full font-medium transition capitalize ${filter === category ? 'bg-green-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                                onClick={() => setFilter(category)}
-                            >
-                                {category === 'all' ? 'Todos' : category}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+      {/* ===== SECCIÓN VALORES ===== */}
+      <section id="valores" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 font-display">Nuestros Valores</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        _   {valoresData.map((valor) => (
+              <div key={valor.title} className="p-6">
+                <div className="flex justify-center mb-4">
+                  {valor.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">{valor.title}</h3>
+                <p className="text-gray-600">{valor.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                {/* Grid de Productos */}
-                {loading ? (
-                    <p className="text-center text-gray-500">Cargando productos...</p>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {filteredProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
-                )}
-            </section>
-        </>
-    );
+      {/* ===== SECCIÓN CATÁLOGO ===== */}
+      <section id="catalogo" className="py-16 bg-gray-50 border-t border-gray-200">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12 font-display">Catálogo de Productos</h2>
+          
+          {/* Formulario de Búsqueda y Filtros */}
+          <div className="flex flex-col md:flex-row gap-4 mb-10 justify-center items-center">
+            <div className="relative w-full md:w-1/2 lg:w-1/3">
+              <input
+                type="text"
+                placeholder="Buscar productos (ej. Tomates, Miel...)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-full focus:ring-green-primary focus:border-green-primary transition shadow-sm"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setFilterCategory(category)}
+                  className={`py-2 px-4 rounded-full font-medium text-sm transition ${
+                    filterCategory === category 
+                    ? 'bg-green-primary text-white shadow-md' 
+                    : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Grid de Productos */}
+          {loading && (
+            <div className="flex justify-center items-center h-64">
+              <Loader2 className="w-12 h-12 text-green-primary animate-spin" />
+              <p className="ml-4 text-xl text-gray-600">Cargando productos...</p>
+            </div>
+          )}
+
+          {!loading && error && (
+            <div className="col-span-full text-center py-10 bg-red-100 text-red-700 rounded-lg">
+              <p className="text-xl">{error}</p>
+            </div>
+          )}
+
+          {/* ESTE ES EL BLOQUE CORREGIDO */}
+          {!loading && !error && filteredProducts.length === 0 && (
+            <div className="col-span-full text-center py-10">
+              <p className="text-xl text-gray-600">No se encontraron productos que coincidan con tu búsqueda.</p>
+s           </div>
+          )}
+
+          {!loading && !error && filteredProducts.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {filteredProducts.map(product => (
+                <ProductCard 
+                  key={product.id} 
+s                 product={product} 
+            _     />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  );
 };
 
 export default Home;
+

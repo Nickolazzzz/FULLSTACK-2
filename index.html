@@ -1,200 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HuertoHogar - Productos Frescos del Campo a tu Mesa</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Fuentes de Google -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
 
-  <!-- ================= HEADER ================= -->
-  <header class="main-header">
-    <div class="container header-content">
-      <div class="logo">
-        <img src="images/logo-huertohogar.png" alt="Logo HuertoHogar">
-      </div>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-
-          <li><a href="#catalogo">Catálogo</a></li>
-          <li><a href="recetas.html">Recetas</a></li>
-          <li><a href="sobrenosotros.html">Sobre Nosotros</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-      </nav>
-      <div class="cart-button">
-        <a href="carrito.html" class="btn btn-primary">Mi Carrito</a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- ================= HERO ================= -->
-    <section id="hero" class="hero-section">
-      <div class="container hero-content">
-        <div class="hero-text">
-          <h1>¡Descubre la frescura del campo con HuertoHogar!</h1>
-          <p>Conéctate con la naturaleza y lleva lo mejor del campo a tu mesa.</p>
-          <div class="hero-buttons">
-            <a href="#catalogo" class="btn btn-secondary">Explorar Catálogo</a>
-            <a href="#unete" class="btn btn-tertiary">Únete Ahora</a>
-          </div>
-        </div>
-        <div class="hero-image">
-          <img src="images/familia-huerto.png" alt="Familia feliz en un huerto">
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= VALORES ================= -->
-    <section id="valores" class="values-section">
-      <div class="container">
-        <h2>Nuestros Valores</h2>
-        <div class="values-grid">
-          <article class="value-item">
-            <img src="images/icon-quality.png" alt="Icono de calidad">
-            <h3>Sembrado</h3>
-            <p>Calidad & Frescura</p>
-          </article>
-          <article class="value-item">
-            <img src="images/icon-organic.png" alt="Icono orgánico">
-            <h3>Verduras</h3>
-            <p>Sostenibilidad</p>
-          </article>
-          <article class="value-item">
-            <img src="images/icon-support.png" alt="Icono de apoyo">
-            <h3>Apoyo Local</h3>
-            <p>A pymes cultivadores</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CATÁLOGO ================= -->
-    <section id="catalogo" class="catalog-section">
-      <div class="container">
-        <h2>Catálogo Productos</h2>
-        <!-- Filtros -->
-        <div class="category-filters">
-          <button class="filter-btn active" data-category="all">Todas</button>
-          <button class="filter-btn" data-category="frutas">Frutas Frescas</button>
-          <button class="filter-btn" data-category="verduras">Verduras Orgánicas</button>
-          <button class="filter-btn" data-category="organicos">Productos Orgánicos</button>
-          <button class="filter-btn" data-category="lacteos">Productos Lácteos</button>
-        </div>
-
-        
-        <!-- Productos -->
-        <div class="product-grid">
-          <article class="product-item" data-category="frutas">
-            <img src="images/manzanas-fuji.jpg" alt="Manzanas Fuji">
-            <h3>FR001 - Manzanas Fuji</h3>
-            <p>Precio: $1,200 CLP/Kg</p>
-            <p>Stock: 150 Kg</p>
-            <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-          </article>
-
-          <article class="product-item" data-category="verduras">
-            <img src="images/zanahorias-organicas.jpg" alt="Zanahorias Orgánicas">
-            <h3>VR001 - Zanahorias Orgánicas</h3>
-            <p>Precio: $900 CLP/Kg</p>
-            <p>Stock: 100 Kg</p>
-            <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-          </article>
-
-          <article class="product-item" data-category="frutas">
-            <img src="images/naranjas-valencia.jpg" alt="Naranjas Valencia">
-            <h3>FR002 - Naranjas Valencia</h3>
-            <p>Precio: $1,000 CLP/Kg</p>
-            <p>Stock: 200 Kg</p>
-            <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-          </article>
-
-          <article class="product-item" data-category="frutas">
-            <img src="images/platanos-cavendish.jpg" alt="Plátanos Cavendish">
-            <h3>FR003 - Plátanos Cavendish</h3>
-            <p>Precio: $800 CLP/Kg</p>
-            <p>Stock: 250 Kg</p>
-            <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-            </article>
-
-        <article class="product-item" data-category="verduras">
-          <img src="images/espinacas-frescas.jpg" alt="Espinacas Frescas">
-          <h3>VR002 - Espinacas Frescas</h3>
-          <p>Precio: $700 CLP/Kg</p>
-          <p>Stock: 80 bolsas</p>
-          <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-        </article>
-
-        <article class="product-item" data-category="verduras">
-          <img src="images/pimientos-tricolores.jpg" alt="Pimientos Tricolores">
-          <h3>VR003 - Pimientos Tricolores</h3>
-          <p>Precio: $1,500 CLP/Kg</p>
-          <p>Stock: 120 Kg</p>
-          <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-        </article>
-
-        <article class="product-item" data-category="organicos">
-          <img src="images/miel-organica.jpg" alt="Miel Orgánica">
-          <h3>PO001 - Miel Orgánica</h3>
-          <p>Precio: $5,000 CLP/Frasco (500g)</p>
-          <p>Stock: 50 frascos</p>
-          <button class="btn btn-add-to-cart">Agregar al Carrito</button>
-        </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= REGISTRO DE USUARIO ================= -->
-    <section id="unete" class="register-section">
-      <div class="container">
-        <h2>Regístrate</h2>
-        <form id="register-form">
-          <div>
-            <label for="username">Nombre de usuario</label>
-            <input type="text" id="username" name="username" required>
-          </div>
-          <div>
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div>
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required minlength="6">
-          </div>
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </form>
-      </div>
-    </section>
-  </main>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HuertoHogar - React EP2</title>
 
 
-  <!-- ================= FOOTER ================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-  <footer class="main-footer">
-    <div class="container footer-content">
-      <div class="footer-logo">
-        <img src="images/logo-huertohogar-small.png" alt="Logo HuertoHogar Pequeño">
-      </div>
-      <div class="social-media">
-        <a href="#"><img src="images/icon-facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="images/icon-instagram.png" alt="Instagram"></a>
-        <a href="#"><img src="images/icon-twitter.png" alt="Twitter"></a>
-      </div>
-      <p>&copy; 2024 HuertoHogar. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+  </head>
+  <body>
 
+    <div id="root"></div>
 
-  <!-- ================= JAVASCRIPT ================= -->
-   
-  <script src="js/script.js"></script>
-</body>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
+
