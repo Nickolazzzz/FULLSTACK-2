@@ -1,137 +1,146 @@
 import React from 'react';
-import { useCart } from '../context/CartContext';
+// 1. Importar el hook useCart para acceder a la lógica del carrito
+import { useCart } from '../context/CartContext.jsx'; // (Asegúrate que la ruta sea correcta)
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react';
 
 const Carrito = () => {
-  // Obtenemos TODO desde el contexto
+  // 2. Obtener todo lo necesario del Contexto
   const { 
     cart, 
     incrementQuantity, 
     decrementQuantity, 
     removeFromCart, 
-    clearCart, 
-    totalItems, 
+    clearCart,
+    totalItems,
     totalPrice 
   } = useCart();
 
-  // Formateador de moneda (CLP)
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('es-CL', {
-      style: 'currency',
-      currency: 'CLP',
-    }).format(price);
-  };
-
-  // Si el carrito está vacío
+  // --- Caso 1: El carrito está vacío ---
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center min-h-[60vh] flex flex-col justify-center items-center">
         <ShoppingBag className="w-24 h-24 text-gray-300 mb-6" />
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Tu carrito está vacío</h1>
-        <p className="text-gray-600 mb-8">
-          Parece que aún no has añadido productos.
-        </p>
+        <h1 className="text-4xl font-bold text-gray-800 mb-3">Tu carrito está vacío</h1>
+        <p className="text-gray-500 mb-8">Parece que aún no has añadido ningún producto.</p>
         <Link 
           to="/"
-          className="bg-green-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 hover:bg-green-700 shadow-lg"
+          className="flex items-center justify-center bg-green-600 text-white font-bold py-3 px-6 rounded-full text-lg hover:bg-green-700 transition duration-300"
         >
-          <ArrowLeft className="w-5 h-5 inline-block mr-2" />
+          <ArrowLeft className="w-5 h-5 mr-2" />
           Volver al Catálogo
         </Link>
       </div>
     );
   }
 
-  // Si el carrito tiene productos
+  // --- Caso 2: El carrito tiene productos ---
   return (
-    <div className="container mx-auto px-4 py-12 min-h-[70vh]">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 font-display">Mi Carrito de Compras</h1>
+    <div className="container mx-auto px-4 py-12">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Mi Carrito ({totalItems} {totalItems === 1 ? 'producto' : 'productos'})</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Columna de Productos (Ocupa 2/3) */}
+        {/* Columna Izquierda: Lista de Productos */}
         <div className="lg:col-span-2 space-y-4">
-          {cart.map((item) => (
+          {cart.map(item => (
             <div key={item.id} className="flex flex-col sm:flex-row items-center bg-white p-4 rounded-lg shadow-md border">
               <img 
                 src={item.imageSrc} 
-                alt={item.name}
+                alt={item.name} 
                 className="w-24 h-24 object-cover rounded-md mb-4 sm:mb-0 sm:mr-6"
+                onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/100x100/AAAAAA/FFFFFF?text=Sin+Imagen" }}
               />
+              
               <div className="flex-grow text-center sm:text-left">
-                <h3 className="text-xl font-semibold text-green-800">{item.name}</h3>
-                <p className="text-gray-600">{formatPrice(item.price)}</p>
+                <h2 className="text-xl font-semibold text-gray-800">{item.name}</h2>
+                <p className="text-lg text-green-600 font-bold">${item.price.toLocaleString('es-CL')}</p>
               </div>
-              <div className="flex items-center space-x-4 my-4 sm:my-0 sm:mx-6">
+              
+              <div className="flex items-center space-x-3 my-4 sm:my-0 sm:mx-6">
+                {/* Botón de Decrementar */}
                 <button 
                   onClick={() => decrementQuantity(item.id)}
                   className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
-                  aria-label="Decrementar"
+                  aria-label="Restar uno"
                 >
-                  <Minus className="w-5 h-5" />
+                  <Minus className="w-4 h-4" />
                 </button>
-                <span className="text-xl font-bold w-10 text-center">{item.quantity}</span>
+                
+                {/* Cantidad */}
+                <span className="text-lg font-bold w-10 text-center">{item.quantity}</span>
+                
+                {/* Botón de Incrementar */}
                 <button 
                   onClick={() => incrementQuantity(item.id)}
                   className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
-                  aria-label="Incrementar"
+                  aria-label="Sumar uno"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-4 h-4" />
                 </button>
               </div>
-              <div className="font-bold text-lg w-24 text-center sm:text-right">
-                {formatPrice(item.price * item.quantity)}
+              
+              <div className="flex items-center">
+                {/* Subtotal por item */}
+                <p className="text-lg font-bold w-24 text-center sm:text-right">${(item.price * item.quantity).toLocaleString('es-CL')}</p>
+                
+                {/* Botón de Eliminar */}
+                <button 
+                  onClick={() => removeFromCart(item.id)}
+                  className="ml-4 p-2 text-red-500 hover:text-red-700 transition"
+                  aria-label="Eliminar producto"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
               </div>
-              <button 
-                onClick={() => removeFromCart(item.id)}
-                className="ml-4 text-red-500 hover:text-red-700 transition"
-                aria-label="Eliminar"
-              >
-                <Trash2 className="w-6 h-6" />
-              </button>
             </div>
           ))}
-          <button 
-            onClick={clearCart}
-            className="text-sm text-red-500 hover:underline mt-4"
-          >
-            Vaciar Carrito
-          </button>
         </div>
 
-        {/* Columna de Resumen (Ocupa 1/3) */}
-        <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-xl border h-fit sticky top-28">
-          <h2 className="text-2xl font-bold text-gray-800 border-b pb-4 mb-4">Resumen del Pedido</h2>
-          <div className="space-y-3">
-            <div className="flex justify-between text-lg">
-              <span className="text-gray-600">Total de Productos:</span>
-              <span className="font-semibold">{totalItems}</span>
+        {/* Columna Derecha: Resumen de Compra */}
+        <div className="lg:col-span-1">
+          <div className="bg-white p-6 rounded-lg shadow-lg border sticky top-24">
+            <h2 className="text-2xl font-bold text-gray-800 border-b pb-3 mb-4">Resumen del Pedido</h2>
+            <div className="space-y-2 mb-4">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Subtotal ({totalItems} productos)</span>
+                <span className="font-semibold text-gray-800">${totalPrice.toLocaleString('es-CL')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Envío</span>
+                <span className="font-semibold text-green-600">GRATIS</span>
+              </div>
             </div>
-            <div className="flex justify-between text-2xl font-bold">
-              <span>Total a Pagar:</span>
-              <span className="text-green-600">{formatPrice(totalPrice)}</span>
+            <div className="border-t pt-4">
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-xl font-bold text-gray-800">Total</span>
+                <span className="text-2xl font-bold text-green-700">${totalPrice.toLocaleString('es-CL')}</span>
+              </div>
+              
+              {/* Botón Simular Pago */}
+              <Link 
+                to="/pago-exitoso" // (Simulamos un pago exitoso por ahora)
+                onClick={clearCart} // ¡Vacía el carrito al pagar!
+                className="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-full text-lg text-center block hover:bg-green-700 transition duration-300"
+              >
+                Ir a Pagar
+              </Link>
+
+              {/* Botón Vaciar Carrito */}
+              <button 
+                onClick={clearCart}
+                className="w-full text-red-500 hover:text-red-700 font-semibold mt-4 text-sm transition"
+              >
+                Vaciar Carrito
+              </button>
             </div>
           </div>
-          <p className="text-sm text-gray-500 my-4">
-            El costo de envío será calculado al momento de pagar.
-          </p>
-          <Link
-            to="/pago-exitoso" // (Ruta para el Flujo de Pago - IE2.2.1)
-            className="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 hover:bg-green-700 shadow-lg text-center block text-lg"
-          >
-            Ir a Pagar
-          </Link>
-          <Link 
-            to="/"
-            className="w-full text-green-600 font-semibold py-3 px-6 rounded-full transition duration-300 hover:bg-green-50 text-center block text-md mt-3"
-          >
-            Seguir Comprando
-          </Link>
         </div>
+
       </div>
     </div>
   );
 };
 
 export default Carrito;
+

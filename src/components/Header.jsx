@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 // 2. ¡Importamos el hook 'useCart' del Contexto!
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, Menu, X, Leaf } from 'lucide-react';
+import { ShoppingCart, Menu, X, Leaf, Icon } from 'lucide-react';
 
 // 3. ¡El Header ya no recibe 'cart' como prop!
 const Header = () => {
@@ -129,5 +129,16 @@ const Header = () => {
     </header>
   );
 };
+
+<NavLink 
+  to="/admin" 
+  className={({ isActive }) => 
+    isActive 
+      ? "font-semibold text-green-dark border-b-2 border-green-dark" // Clases si está ACTIVO
+      : "text-gray-700 hover:text-green-primary" // Clases si está INACTIVO
+  }
+>
+  <User className="w-6 h-6" /> {Leaf}
+</NavLink>
 
 export default Header;

@@ -29,7 +29,11 @@ function App() {
           <Route path="/recetas" element={<Recetas />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
-          {/* <Route path="/carrito" element={<Carrito />} /> */}
+          
+          <Route path="/carrito" element={<Carrito />} />
+
+          <Route path="/admin" element={<Admin />} />
+        
         </Routes>
       </main>
 
