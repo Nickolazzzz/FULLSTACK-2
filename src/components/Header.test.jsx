@@ -1,14 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import Header from './Header';
-import { CartProvider, useCart } from '../context/CartContext';
+import Header from './Header.jsx';
+import { CartProvider, useCart } from '../context/CartContext.jsx';
 
 // Mock del Contexto del Carrito para las pruebas
 // Ocultamos la implementación real y proveemos una versión simulada
-vi.mock('../context/CartContext', () => ({
+vi.mock('../context/CartContext.jsx', () => ({
     useCart: () => ({
-        totalItems: 5 // Simulamos que hay 5 ítems en el carrito
+        cart: [
+            { id: 1, quantity: 3 },
+            { id: 2, quantity: 2 }
+        ]
     }),
     CartProvider: ({ children }) => <div>{children}</div> // Provider simulado
 }));
@@ -30,11 +33,14 @@ describe('Componente Header', () => {
         // Buscamos los links
         expect(screen.getByText('Inicio')).toBeInTheDocument();
         expect(screen.getByText('Contacto')).toBeInTheDocument();
-        expect(screen.getByText('Administrar')).toBeInTheDocument();
+ 
+        expect(screen.getByText('Catálogo')).toBeInTheDocument();
+        expect(screen.getByText('Recetas')).toBeInTheDocument();
+        expect(screen.getByText('Sobre Nosotros')).toBeInTheDocument(); 
     });
 
     // Prueba 2: Verificar que el contador del carrito muestra el número correcto
-    it('debería mostrar el número correcto de ítems en el carrito (IE2.3.1)', () => {
+    it('debería mostrar el número correcto de ítems en el carrito', () => {
         render(
             <BrowserRouter>
                 <Header />
@@ -43,6 +49,7 @@ describe('Componente Header', () => {
 
         // Buscamos el botón del carrito y verificamos que muestre (5)
         // Usamos una expresión regular (regex) para buscar el texto "Mi Carrito (5)"
-        expect(screen.getByText(/Mi Carrito \(5\)/i)).toBeInTheDocument();
+        expect(screen.getByText(/Mi Carrito/i)).toBeInTheDocument(); // Busca el texto "Mi Carrito"
+        expect(screen.getByText('5')).toBeInTheDocument(); // Busca el número "5"
     });
 });
